@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     path('morpheme_analysis',views.morpheme_analysis,name="morpheme_analysis"),
     path('login',views.login,name="login"),
-    path('prohibition11111111',views.prohibition,name="prohibition"),
+    path('prohibition',views.prohibition,name="prohibition"),
     path('setting_save',views.setting_save,name="setting_save"),
     path('naver_all_upload',views.naver_all_upload,name="naver_all_upload"),
     path('naver_page',views.naver_page,name="naver_page"),
