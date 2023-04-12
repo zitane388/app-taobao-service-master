@@ -1119,8 +1119,6 @@ def morpheme_analysis(request):
     }
     ero_msg = ''
     try:
-        admin_email = request.session["admin_email"]
-        dt = json.loads(request.body.decode('utf-8'))
         output = "잘받았습니다."
         data['data'] = output
     except:
