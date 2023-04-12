@@ -1101,9 +1101,9 @@ def morpheme_analysis(request):
     }
     ero_msg = ''
     try:
-        mecab = MeCab()
+        mecab = MeCab().Tagger()
         query = request.GET.get('query', '')
-        result = mecab.morphs(query)
+        result = mecab.parse(query)
         data['data'] = result
     except:
         ero_msg = traceback.format_exc()
