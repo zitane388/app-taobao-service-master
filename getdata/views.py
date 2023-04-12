@@ -1113,19 +1113,36 @@ def option_upload(request):
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
 def morpheme_analysis(request):
+    logger.info('setting_save')
     data = {
         "code": 200,
-        "msg":"완료",
-    }
-    ero_msg = ''
+        "msg":"업로드 완료"
+    }    
     try:
-        output = "잘받았습니다."
-        data['data'] = output
+        dt = json.loads(request.body.decode('utf-8'))
+        if request.session['admin']:
+            admin_email = request.session['admin_email']
+            email = request.session['email']
+            key = dt['key']
+            tax = dt['tax']
+            margin = dt['margin']
+            if Secret_Key.objects.filter(admin_email=admin_email):
+                one = Secret_Key.objects.get(admin_email=admin_email)
+                one.key = key
+                one.save()
+            else:
+                Secret_Key.objects.create(admin_email=admin_email,key=key)
+            if User_Info.objects.filter(admin_email=admin_email,email=email):
+               one = User_Info.objects.get(admin_email=admin_email,email=email)
+               one.tax = tax
+               one.margin = margin
+               one.save()
     except:
         ero_msg = traceback.format_exc()
-            
-    data['ero'] = ero_msg
-        
+        data['msg'] = ero_msg
+        logger.info(ero_msg)
+
+    
     return HttpResponse(json.dumps(data), content_type = "application/json")
     
     
