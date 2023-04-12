@@ -1093,6 +1093,7 @@ def option_upload(request):
     
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
+from eunjeon import MeCab
 def morpheme_analysis(request):
     data = {
         "code": 200,
@@ -1100,8 +1101,10 @@ def morpheme_analysis(request):
     }
     ero_msg = ''
     try:
-        output = "잘받았습니다."
-        data['data'] = output
+        mecab = MeCab.Tagger()
+        result = mecab.parse(request)
+        result_json = json.loads(result)
+        data['data'] = result_json
     except:
         ero_msg = traceback.format_exc()
             
