@@ -1111,6 +1111,24 @@ def option_upload(request):
         
     
     return HttpResponse(json.dumps(data), content_type = "application/json")
+
+def morpheme_analysis(request):
+    data = {
+        "code": 200,
+        "msg":"완료",
+    }
+    ero_msg = ''
+    try:
+        admin_email = request.session["admin_email"]
+        dt = json.loads(request.body.decode('utf-8'))
+        output = "잘받았습니다."
+        data['data'] = output
+    except:
+        ero_msg = traceback.format_exc()
+            
+    data['ero'] = ero_msg
+        
+    return HttpResponse(json.dumps(data), content_type = "application/json")
     
     
     
