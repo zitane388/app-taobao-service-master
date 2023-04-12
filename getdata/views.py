@@ -1093,7 +1093,7 @@ def option_upload(request):
     
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
-from eunjeon import MeCab
+import MeCab
 def morpheme_analysis(request):
     data = {
         "code": 200,
