@@ -31,8 +31,6 @@ def sum_pk(pk_data):
     data['pk'] = pk_data['pk']
     return data
 
-
-
 def sourcing_delect(request):
     logger.info('sourcing_delect')
     data = {
@@ -52,8 +50,6 @@ def sourcing_delect(request):
         data['msg'] = ero_msg
         logger.info(ero_msg)
     return HttpResponse(json.dumps(data), content_type = "application/json")
-
-
 
 def sourcing_update(request):
     logger.info('sourcing_update')
@@ -103,8 +99,6 @@ def sourcing_update(request):
 
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
-
-
 def sourcing_upload(request):
     logger.info('sourcing_upload')
     try:
@@ -135,7 +129,6 @@ def get_sourcing_data(one_sourcing):
     main_img = [sum_pk(i) for i in json.loads(serializers.serialize("json", Main_Images.objects.filter(sourcing_id=one_sourcing)))]
     cont_img = [sum_pk(i) for i in json.loads(serializers.serialize("json", Content_Images.objects.filter(sourcing_id=one_sourcing)))]
     return {'sourcing':sourcing,'sourcing_pr':sourcing_pr,'sourcing_op_ctg':sourcing_op_ctg,'sourcing_op_deep_ctg':sourcing_op_deep_ctg,'cont_img':cont_img,'main_img':main_img}
-    
 
 def sourcing_product_delete(request):
     logger.info('sourcing_product_delete')
@@ -182,7 +175,6 @@ def sourcing_product_confirm(request):
     
     return HttpResponse(json.dumps(data), content_type = "application/json")   
 
-
 def set_item_id(request):
     logger.info('set_item_id')
     data = {
@@ -214,6 +206,7 @@ def set_item_id(request):
     return HttpResponse(json.dumps(data), content_type = "application/json")  
 
 def sourcing_product_upload(request):
+    
     logger.info('sourcing_product_upload')
     datat = {
         "code": 200,
@@ -438,7 +431,6 @@ def naver_page(request):
         logger.info(ero_msg)
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
-
 def problem_set(request):
     logger.info('problem_set')
     data = {
@@ -464,6 +456,7 @@ def problem_set(request):
     return HttpResponse(json.dumps(data), content_type = "application/json")    
 
 def sourcing_page(request):
+    
     logger.info('sourcing_page')
     try:
         admin_email = request.session['admin_email']
@@ -552,9 +545,8 @@ def manager_update(request):
 
     return HttpResponse(json.dumps(data), content_type = "application/json")    
 
-
-
 def naver_all_delete(request):
+    
     logger.info('naver_all_delete')
     data = {
         "code": 200,
@@ -620,8 +612,6 @@ def naver_all_upload(request):
         data['msg'] = ero_msg
         logger.info(ero_msg)
     return HttpResponse(json.dumps(data), content_type = "application/json")
-
-
 
 def setting_save(request):
     logger.info('setting_save')
@@ -845,8 +835,6 @@ def login(request):
         text['message'] = traceback.format_exc()
         return HttpResponse(json.dumps(text), content_type = "application/json")
     
-    
-    
 def get_options(sourcing_pr,existent_op_data,rate,tax):
     options = []
     for op in existent_op_data:
@@ -877,7 +865,6 @@ def get_options(sourcing_pr,existent_op_data,rate,tax):
         
         options.append(option)
     return options
-
 
 def get_prop(ds):
     prop = []
@@ -918,8 +905,6 @@ def get_existent_op_data(sourcing_op_ctg,sourcing_op_deep_ctg,ds):
         for i in sourcing_op_deep_ctg:
             existent_op_data.append({"deep_op":i,"op_list":[]})
     return existent_op_data        
-    
-    
     
 def seller_up_load(request):
     logger.info('seller_up_load')
@@ -1013,9 +998,7 @@ def seller_up_load(request):
 
     data["data"] = update_list
     return HttpResponse(json.dumps(data), content_type = "application/json")   
-    
-    
-    
+     
 def activation(request):
     logger.info('activation')
     admin_email = request.session["admin_email"]
@@ -1024,7 +1007,6 @@ def activation(request):
         "msg":"활성화 완료",
     }
     return HttpResponse(json.dumps(data), content_type = "application/json")
-
 
 def get_option_data(request):
     data = {
@@ -1047,7 +1029,6 @@ def get_option_data(request):
             pass
     data['data'] = output
     return HttpResponse(json.dumps(data), content_type = "application/json")
-
 
 def option_upload(request):
     data = {
@@ -1113,36 +1094,19 @@ def option_upload(request):
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
 def morpheme_analysis(request):
-    logger.info('setting_save')
     data = {
         "code": 200,
-        "msg":"업로드 완료"
-    }    
+        "msg":"완료",
+    }
+    ero_msg = ''
     try:
-        dt = json.loads(request.body.decode('utf-8'))
-        if request.session['admin']:
-            admin_email = request.session['admin_email']
-            email = request.session['email']
-            key = dt['key']
-            tax = dt['tax']
-            margin = dt['margin']
-            if Secret_Key.objects.filter(admin_email=admin_email):
-                one = Secret_Key.objects.get(admin_email=admin_email)
-                one.key = key
-                one.save()
-            else:
-                Secret_Key.objects.create(admin_email=admin_email,key=key)
-            if User_Info.objects.filter(admin_email=admin_email,email=email):
-               one = User_Info.objects.get(admin_email=admin_email,email=email)
-               one.tax = tax
-               one.margin = margin
-               one.save()
+        output = "잘받았습니다."
+        data['data'] = output
     except:
         ero_msg = traceback.format_exc()
-        data['msg'] = ero_msg
-        logger.info(ero_msg)
-
-    
+            
+    data['ero'] = ero_msg
+        
     return HttpResponse(json.dumps(data), content_type = "application/json")
     
     
