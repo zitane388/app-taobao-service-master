@@ -25,6 +25,6 @@ urlpatterns = [
     path('set_item_id',views.set_item_id,name="set_item_id"),
     path('get_option_data',views.get_option_data,name="get_option_data"),
     path('option_upload',views.option_upload,name="option_upload"),
-    path('morpheme_analysis', views.morpheme_analysis,name="morpheme_analysis")
+    path('morpheme_analysis',views.morpheme_analysis,name="morpheme_analysis")
     
 ]
