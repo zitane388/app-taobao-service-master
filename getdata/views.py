@@ -1104,7 +1104,25 @@ def morpheme_analysis(request):
         mecab = MeCab.Tagger()
         query = request.GET.get('query', '')
         result = mecab.parse(query)
-        data['data'] = result
+        # 문자열을 줄 단위로 분리
+        lines = result.split('\n')
+
+        # JSON 형식으로 변환하여 저장할 리스트
+        result = []
+
+        # 각 줄을 처리하여 JSON에 추가
+        for line in lines:
+            if line:
+                # 탭으로 구분된 필드들을 추출
+                fields = line.split('\t')
+                # 필드들을 딕셔너리 형태로 저장
+                field_dict = {fields[0]: fields[1].split(',')[0]}
+                # 딕셔너리를 JSON 리스트에 추가
+                result.append(field_dict)
+
+        # JSON 형식으로 출력
+        json_result = json.dumps(result, ensure_ascii=False, indent=2)
+        data['data'] = json_result
     except:
         ero_msg = traceback.format_exc()
             
