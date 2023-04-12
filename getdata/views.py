@@ -1102,7 +1102,8 @@ def morpheme_analysis(request):
     ero_msg = ''
     try:
         mecab = MeCab.Tagger()
-        result = mecab.parse(request)
+        query = request.GET.get('query', '')
+        result = mecab.parse(query)
         result_json = json.loads(result)
         data['data'] = result_json
     except:
