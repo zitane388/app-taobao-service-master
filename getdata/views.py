@@ -1124,7 +1124,7 @@ def morpheme_analysis(request):
                     result.append(field_dict)
 
         # JSON 형식으로 출력
-        json_result = json.dumps(result, ensure_ascii=False, indent=2).replace('\n', '')
+        json_result = json.dumps(result, ensure_ascii=False, indent=2).replace('\n', '').replace(' ', '')
         data['data'] = json_result
     except:
         ero_msg = traceback.format_exc()
