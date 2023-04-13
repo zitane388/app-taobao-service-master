@@ -1097,7 +1097,7 @@ import MeCab
 def morpheme_analysis(request):
     data = {
         "code": 200,
-        "msg":"완료",
+        "msg": "완료",
     }
     ero_msg = ''
     try:
@@ -1120,17 +1120,18 @@ def morpheme_analysis(request):
                 if len(fields) >= 2:
                     field_dict = {fields[0]: fields[1].split(',')[0]}
                 # 딕셔너리를 JSON 리스트에 추가
-                result.append(field_dict)
+                if field_dict:
+                    result.append(field_dict)
 
         # JSON 형식으로 출력
         json_result = json.dumps(result, ensure_ascii=False, indent=2)
         data['data'] = json_result
     except:
         ero_msg = traceback.format_exc()
-            
+
     data['ero'] = ero_msg
-        
-    return HttpResponse(json.dumps(data), content_type = "application/json")
+
+    return HttpResponse(json.dumps(data), content_type="application/json")
     
     
     
