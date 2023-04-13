@@ -1116,7 +1116,9 @@ def morpheme_analysis(request):
                 # 탭으로 구분된 필드들을 추출
                 fields = line.split('\t')
                 # 필드들을 딕셔너리 형태로 저장
-                field_dict = {fields[0]: fields[1].split(',')[0]}
+                field_dict = {}
+                if len(fields) >= 2:
+                    field_dict = {fields[0]: fields[1].split(',')[0]}
                 # 딕셔너리를 JSON 리스트에 추가
                 result.append(field_dict)
 
