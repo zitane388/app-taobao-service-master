@@ -4,6 +4,7 @@ import json
 from django.http import JsonResponse
 import json
 import requests
+import urllib3
 from getdata.models import (User_Info,Prohibition,Naver_Product,
                             Sourcing,Sourcing_Product,Sourcing_Option_Category,Sourcing_Option_Deep_Category,
                             Main_Images,Content_Images,
@@ -1103,6 +1104,8 @@ def morpheme_analysis(request):
     try:
         mecab = MeCab.Tagger()
         query = request.GET.get('query', '')
+        # URL 디코딩 추가
+        query = urllib3.parse.unquote(query)
         result = mecab.parse(query)
         # 문자열을 줄 단위로 분리
         lines = result.split('\n')
