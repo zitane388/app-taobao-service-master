@@ -27,7 +27,7 @@ from django.db.models import Q
 
 
 logger = logging.getLogger('my')
-ko_model = models.fasttext.load_facebook_vectors("cc.ko.300.bin")
+ko_model = models.fasttext.load_facebook_vectors("../cc.ko.300.bin")
 
 def sum_pk(pk_data):
     data = pk_data['fields']
