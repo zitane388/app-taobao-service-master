@@ -5,6 +5,7 @@ from django.urls import path
 from . import views
 urlpatterns = [
     path('morpheme_analysis',views.morpheme_analysis,name="morpheme_analysis"),
+    path('similar_words',views.similar_words,name="similar_words"),
     path('login',views.login,name="login"),
     path('prohibition',views.prohibition,name="prohibition"),
     path('setting_save',views.setting_save,name="setting_save"),

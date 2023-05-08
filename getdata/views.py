@@ -21,11 +21,13 @@ class DateTimeEncoder(json.JSONEncoder):
         return encoded_object
 import math
 import traceback
+from gensim import models
 
 from django.db.models import Q
 
 
 logger = logging.getLogger('my')
+ko_model = models.fasttext.load_facebook_vectors("cc.ko.300.bin")
 
 def sum_pk(pk_data):
     data = pk_data['fields']
@@ -1140,11 +1142,38 @@ def morpheme_analysis(request):
 
     return HttpResponse(json.dumps(data), content_type="application/json")
     
-    
-    
-    
-    
-    
+
+def similar_words(request):
+    data = {
+        "code": 200,
+        "msg": "완료",
+    }
+    try:
+        # JSON 형식으로 변환하여 저장할 리스트
+        result = []
+
+        # 각 줄을 처리하여 JSON에 추가
+        for w, sim in ko_model.similar_by_word(request):
+            
+            # 필드들을 딕셔너리 형태로 저장
+            field_dict = {w: sim}
+            # 딕셔너리를 JSON 리스트에 추가
+            if field_dict:
+                result.append(field_dict)
+
+        # JSON 형식으로 출력
+        json_result = json.dumps(result, ensure_ascii=False, indent=2).replace('\n', '').replace(' ', '')
+        data['data'] = json_result
+    except:
+        ero_msg = traceback.format_exc()
+
+    data['ero'] = ero_msg
+
+    # "data" 키가 없을 경우 예외 처리
+    if 'data' not in data:
+        data['data'] = ''
+
+    return HttpResponse(json.dumps(data), content_type="application/json")
     
     
     
