@@ -22,14 +22,12 @@ class DateTimeEncoder(json.JSONEncoder):
 import math
 import traceback
 from gensim import models
-import os
 
 from django.db.models import Q
 
 
 logger = logging.getLogger('my')
-model_path = os.path.abspath('../cc.ko.300.bin')
-ko_model = models.fasttext.load_facebook_vectors(model_path)
+ko_model = models.fasttext.load_facebook_vectors("/root/seller_backend/app-taobao-service/cc.ko.300.bin")
 
 def sum_pk(pk_data):
     data = pk_data['fields']
